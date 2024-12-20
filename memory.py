@@ -12,11 +12,8 @@ from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 
 load_dotenv()
-
-# Get Groq API key
-groq_api_key = os.environ.get("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")
+groq_api_key = os.environ.get("your_api_key")
 model = "llama3-8b-8192"
-# Initialize Groq Langchain chat object and conversation
 client = ChatGroq(groq_api_key=groq_api_key, model_name=model)
 
 
