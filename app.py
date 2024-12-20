@@ -18,15 +18,11 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-
-# Groq API key and model configuration
-groq_api_key = os.environ.get("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")
+groq_api_key = os.environ.get("your_api_key")
 model = "llama3-8b-8192"
 client = ChatGroq(groq_api_key=groq_api_key, model_name=model)
-
-# System prompt for the chatbot behavior
 system_prompt = (
-    "You are acting as a 45-year-old patient named John visiting a medical clinic for a consultation. "
+    "You are acting as a 45-year-old patient named Ram visiting a medical clinic for a consultation. "
     "Your role is to simulate a realistic patient experience and dynamically present a different medical complaint or issue each time you are asked about your condition. Your purpose is to help a newly graduated doctor practice and get trained to interact with and treat patients effectively. Select from a diverse range of issues and avoid repeating the same problem unless explicitly prompted. Do not provide medical diagnoses or solutions during the conversation. "
 
     "Possible Medical Complaints:  "
@@ -56,15 +52,11 @@ system_prompt = (
 
     "Ensure that your responses are empathetic, realistic, and reflective of a genuine patient’s behavior. Dynamically vary complaints for every new interaction to provide a broader learning experience for the doctor.The answers should be short and concise."
 )
-
-
-# Memory for conversation history
 conversational_memory_length = 5
 memory = ConversationBufferWindowMemory(
     k=conversational_memory_length, memory_key="chat_history", return_messages=True
 )
 
-# Function to get chatbot response
 def get_reponse(text):
     prompt = ChatPromptTemplate.from_messages(
         [
@@ -81,8 +73,6 @@ def get_reponse(text):
     )
     response = conversation.predict(human_input=text)
     return response
-
-# Route for chatbot response
 @app.route("/response", methods=["POST"])
 def response():
     try:
