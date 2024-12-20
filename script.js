@@ -1,7 +1,7 @@
 // Function to handle sending a message
 async function sendMessage() {
-    const userInput = document.getElementById('chat-input').value; // Corrected 'id' for input
-    const chatOutput = document.getElementById('chat-output');    // Corrected 'id' for chat area
+    const userInput = document.getElementById('chat-input').value; 
+    const chatOutput = document.getElementById('chat-output');    
   
     // Validate user input
     if (userInput.trim() === '') {
