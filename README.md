@@ -97,7 +97,4 @@ Meditrain AI is a chatbot system designed to simulate patient interactions, allo
 - **Infosys Springboard**: For the opportunity to develop this project as part of the internship.
 - **LangChain** and **Groq**: For their APIs and libraries enabling dynamic conversational AI.
 
----
-
-Feel free to contribute or raise issues for further improvements. Together, we can make Meditrain AI a powerful tool for training doctors!
 
