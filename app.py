@@ -1,9 +1,7 @@
 import os
 from dotenv import load_dotenv
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-
 from langchain.chains import LLMChain
 from langchain_core.prompts import (
     ChatPromptTemplate,
@@ -18,11 +16,12 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-groq_api_key = os.environ.get("your_api_key")
+
+groq_api_key = os.environ.get("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")
 model = "llama3-8b-8192"
 client = ChatGroq(groq_api_key=groq_api_key, model_name=model)
 system_prompt = (
-    "You are acting as a 45-year-old patient named Ram visiting a medical clinic for a consultation. "
+    "You are acting as a 45-year-old patient named John visiting a medical clinic for a consultation. "
     "Your role is to simulate a realistic patient experience and dynamically present a different medical complaint or issue each time you are asked about your condition. Your purpose is to help a newly graduated doctor practice and get trained to interact with and treat patients effectively. Select from a diverse range of issues and avoid repeating the same problem unless explicitly prompted. Do not provide medical diagnoses or solutions during the conversation. "
 
     "Possible Medical Complaints:  "
@@ -52,10 +51,8 @@ system_prompt = (
 
     "Ensure that your responses are empathetic, realistic, and reflective of a genuine patient’s behavior. Dynamically vary complaints for every new interaction to provide a broader learning experience for the doctor.The answers should be short and concise."
 )
-conversational_memory_length = 5
-memory = ConversationBufferWindowMemory(
-    k=conversational_memory_length, memory_key="chat_history", return_messages=True
-)
+
+memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history", return_messages=True)
 
 def get_reponse(text):
     prompt = ChatPromptTemplate.from_messages(
@@ -71,18 +68,29 @@ def get_reponse(text):
         verbose=False,
         memory=memory,
     )
-    response = conversation.predict(human_input=text)
-    return response
+    return conversation.predict(human_input=text)
+
+@app.route("/")
+def index():
+    return jsonify({"message": "Welcome to the LangChain-powered AI medical simulator!"})
+
 @app.route("/response", methods=["POST"])
 def response():
     try:
         data = request.get_json()
         query = data.get("query")
+        if not query:
+            return jsonify({"error": "Query parameter is missing."}), 400
         response = get_reponse(query)
         return jsonify({"response": response})
     except Exception as e:
-        print(e)
-        return jsonify({"error": str(e)}), 500
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({"error": "An internal server error occurred."}), 500
+
+@app.route("/test", methods=["GET"])
+def test():
+    return jsonify({"api_key_set": bool(groq_api_key), "model": model})
 
 if __name__ == "__main__":
     app.run(debug=True)
+
