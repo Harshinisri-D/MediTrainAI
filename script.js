@@ -10,7 +10,7 @@ async function sendMessage() {
     userMessage.style.color = 'blue';
     chatOutput.appendChild(userMessage);
     try {
-      const response = await fetch('http://127.0.0.1:5000/response', {
+      const response = await fetch('https://meditrainai-2.onrender.com/response', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
