@@ -2,6 +2,9 @@
 
 Meditrain AI is a chatbot system designed to simulate patient interactions, allowing newly graduated doctors to practice and improve their communication skills with patients. By acting as a virtual patient, Meditrain AI provides a realistic and diverse range of scenarios to help doctors build confidence and empathy in a controlled environment.
 
+## Live Demo
+Check out the live version of the app here: [https://meditrainai-2.onrender.com](https://meditrainai-2.onrender.com)
+
 ## Features
 
 - Simulates a realistic patient experience by dynamically varying medical complaints.
