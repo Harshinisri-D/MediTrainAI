@@ -16,8 +16,7 @@ from flask import send_from_directory
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
-
+CORS(app, resources={r"/*": {"origins": "*"}})
 groq_api_key = os.environ.get("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")
 model = "llama3-8b-8192"
 client = ChatGroq(groq_api_key=groq_api_key, model_name=model)
@@ -97,4 +96,5 @@ def test():
     return jsonify({"api_key_set": bool(groq_api_key), "model": model})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
+
