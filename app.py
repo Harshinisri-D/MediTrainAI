@@ -11,6 +11,7 @@ from langchain_core.prompts import (
 from langchain_core.messages import SystemMessage
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
+from flask import send_from_directory
 
 load_dotenv()
 
@@ -69,10 +70,14 @@ def get_reponse(text):
         memory=memory,
     )
     return conversation.predict(human_input=text)
-
 @app.route("/")
 def index():
-    return jsonify({"message": "Welcome to the LangChain-powered AI medical simulator!"})
+    return send_from_directory(os.getcwd(), "index.html")
+
+# Serve the files directly from the root folder
+@app.route("/<path:filename>")
+def serve_file(filename):
+    return send_from_directory(os.getcwd(), filename)
 
 @app.route("/response", methods=["POST"])
 def response():
@@ -93,4 +98,3 @@ def test():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
