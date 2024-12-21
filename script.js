@@ -17,7 +17,7 @@ async function sendMessage() {
   
     // Send the message to the backend
     try {
-      const response = await fetch('https://meditrainai-2.onrender.com/response', {
+      const response = await fetch('http://127.0.0.1:5000/response', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,8 +47,9 @@ async function sendMessage() {
   
     // Clear the input field
     document.getElementById('chat-input').value = '';
-}
-
-// Attach event listener to the "Send" button
-document.getElementById('send-btn').addEventListener('click', sendMessage);
+  }
+  
+  // Attach event listener to the "Send" button
+  document.getElementById('send-btn').addEventListener('click', sendMessage);
+  
 
