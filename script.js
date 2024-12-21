@@ -1,21 +1,19 @@
-// Function to handle sending a message
+
 async function sendMessage() {
-    const userInput = document.getElementById('chat-input').value; // Corrected 'id' for input
-    const chatOutput = document.getElementById('chat-output');    // Corrected 'id' for chat area
+    const userInput = document.getElementById('chat-input').value; 
+    const chatOutput = document.getElementById('chat-output');   
   
-    // Validate user input
     if (userInput.trim() === '') {
       alert('Please type a message.');
       return;
     }
   
-    // Display the user's message
+
     const userMessage = document.createElement('p');
     userMessage.textContent = `You: ${userInput}`;
     userMessage.style.color = 'blue';
     chatOutput.appendChild(userMessage);
   
-    // Send the message to the backend
     try {
       const response = await fetch('http://127.0.0.1:5000/response', {
         method: 'POST',
